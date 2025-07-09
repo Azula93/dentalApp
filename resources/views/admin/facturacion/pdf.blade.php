@@ -69,7 +69,7 @@
 </head>
 
 <body>
-    <h1 style="text-align: center;">Recibo de Caja</h1>
+    <h1 style="text-align: center;">Recibo de Caja ORIGINAL</h1>
     <div>
         <img src="data:image/png;base64,{{$qrCodeBase64}}" alt="Codigo QR" style="width: 80px; height: 80px; position: absolute; top: 20px; right: 20px;" />
     </div>
@@ -122,7 +122,7 @@
         </tr>
     </table>
 
-    <br><br><br><br>
+    <br><br>
     <table>
         <tr>
             <td width="210px" style="text-align: center; font-size: 10px;">
@@ -144,7 +144,6 @@
         </tr>
     </table>
 
-
     <div style="text-align: center; font-size: 7pt;">
         <p>Este recibo es válido como comprobante de pago.</p>
         <p>Fecha de emisión: {{ \Carbon\Carbon::parse($factura->fecha_emision)->format('d/m/Y') }}</p>
@@ -152,9 +151,9 @@
     <!-- *************************** -->
     <hr>
     <!-- *************************** -->
-    <h1 style="text-align: center;">Recibo de Caja</h1>
+    <h1 style="text-align: center;">Recibo de Caja COPIA</h1>
     <div>
-        <img src="data:image/png;base64,{{$qrCodeBase64}}" alt="Codigo QR" style="width: 80px; height: 80px; position: absolute; top: 20px; right: 20px;" />
+        <img src="data:image/png;base64,{{$qrCodeBase64}}" alt="Codigo QR" style="width: 80px; height: 80px; position: absolute; top: 530px; right: 0;" />
     </div>
     <div class="header">
         @if($config->logo_url)
@@ -202,9 +201,7 @@
             <td style="text-align: right;"><strong>{{ number_format($factura->monto, 3) }}</strong></td>
         </tr>
     </table>
-
-    <br><br><br>
-
+    <br><br>
     <table>
         <tr>
             <td width="210px" style="text-align: center; font-size: 10px;">

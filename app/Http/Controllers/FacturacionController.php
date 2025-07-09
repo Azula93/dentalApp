@@ -33,6 +33,7 @@ class FacturacionController extends Controller
      */
     public function create()
     {
+
         $pacientes = Paciente::orderBy('apellidos', 'asc')->get();
         return view('admin.facturacion.create', compact('pacientes'));
     }

@@ -33,21 +33,21 @@
                         </tr>
                         <tr>
                             <th>Subtotal</th>
-                            <td>{{ number_format($factura->subtotal, 3) }}</td>
+                            <td>{{ number_format($factura->subtotal ?? 0, 0, ',', '.') }}</td>
                             <th>Descuento</th>
-                            <td>{{ number_format($factura->descuento, 0) }}</td>
+                            <td>{{ number_format($factura->descuento ?? 0, 0, ',', '.') }}</td>
                         </tr>
                         <tr>
                             <th>Impuesto (%)</th>
                             <td>{{ number_format($factura->impuesto, 0) }}%</td>
-                            <th>Total</th>
-                            <td><strong>{{ number_format($factura->monto, 3) }}</strong></td>
+                            <th>Total a pagar</th>
+                            <td><strong>{{ number_format($factura->monto ?? 0, 0, ',', '.') }}</strong></td>
                         </tr>
                         <tr>
                             <th>Método de pago</th>
                             <td>{{ ucfirst($factura->metodo_pago) }}</td>
                             <th>Referencia pago</th>
-                            <td>{{ $factura->referencia_pago ?: '—' }}</td>
+                            <td>{{ $factura->referencia_pago ?? '—'  }}</td>
                         </tr>
                         <tr>
                             <th>Estado</th>
@@ -61,12 +61,12 @@
                                 @endif
                             </td>
                         </tr>
-                        @if($factura->descripcion)
+
                         <tr>
                             <th>Descripción</th>
-                            <td colspan="3">{!! nl2br(e($factura->descripcion)) !!}</td>
+                            <td colspan="3">{!! ($factura->descripcion) !!}</td>
                         </tr>
-                        @endif
+
                     </tbody>
                 </table>
             </div>
@@ -78,4 +78,38 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('formulario');
+        const inputs = document.querySelectorAll('.cop-format');
+
+        // función de formateo: toma sólo dígitos y mete puntos cada 3
+        const formatMiles = str => {
+            const digits = str.replace(/\D/g, '');
+            return digits.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        };
+
+        // 1) formatea el valor que ya vino en el input
+        inputs.forEach(input => {
+            input.value = formatMiles(input.value);
+        });
+
+        // 2) formatea mientras escribes y mantiene el cursor al final
+        inputs.forEach(input => {
+            input.addEventListener('input', () => {
+                input.value = formatMiles(input.value);
+                input.setSelectionRange(input.value.length, input.value.length);
+            });
+        });
+
+        // 3) antes de enviar, quita TODO lo que no sea dígito
+        form.addEventListener('submit', () => {
+            inputs.forEach(input => {
+                input.value = input.value.replace(/\D/g, '');
+            });
+        });
+    });
+</script>
+
 @endsection

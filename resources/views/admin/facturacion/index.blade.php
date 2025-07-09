@@ -18,7 +18,7 @@
                 <th class="text-center">Nombre Paciente</th>
                 <th class="text-center">Fecha de emisión</th>
                 <th class="text-center">Fecha de Pago</th>
-                <th class="text-center">Subtotal</th>
+                <!-- <th class="text-center">Subtotal</th> -->
                 <th class="text-center">Total a pagar</th>
                 <th class="text-center">Método de pago</th>
                 <th class="text-center">Estado</th>
@@ -35,14 +35,16 @@
                 <td class="text-center">{{ $factura->paciente->nombres }} {{ $factura->paciente->apellidos }}</td>
                 <td class="text-center">{{ \Carbon\Carbon::parse($factura->fecha_emision)->format('d/m/Y') }}</td>
                 <td class="text-center">{{ \Carbon\Carbon::parse($factura->fecha_pago)->format('d/m/Y') }}</td>
-                <td class="text-center">{{ number_format($factura->subtotal, 3) }}</td>
-                <td class="text-center">{{ number_format($factura->monto,3) }}</td>
+                <!-- <td class="text-center">{{ number_format($factura->subtotal, 3) }}</td> -->
+                <td class="text-center">{{ number_format($factura->monto ?? 0, 0, ',', '.') }}</td>
                 <td class="text-center">{{ $factura->metodo_pago }}</td>
                 <td class="text-center">
                     @if($factura->estado == 'pagado')
-                    <span class="badge bg-success">{{ $factura->estado }}</span>
+                    <span class="badge bg-success">Pagado</span>
+                    @elseif($factura->estado == 'pendiente')
+                    <span class="badge bg-warning text-dark">Pendiente</span>
                     @else
-                    <span class="badge bg-danger">{{ $factura->estado }}</span>
+                    <span class="badge bg-danger">Anulado</span>
                     @endif
                 </td>
                 <td class="text-center">{!! $factura->descripcion !!}</td>
@@ -56,7 +58,8 @@
                         </a>
 
                         <a href="{{ url('admin/facturacion/pdf/'.$factura->id.'') }}"
-                            type="button" class="btn btn-primary btn-sm"><i class="fa-solid fa-print"></i>
+                            type="button" target="_blank"
+                            rel="noopener noreferrer" class="btn btn-primary btn-sm"><i class="fa-solid fa-print"></i>
                         </a>
 
 
@@ -128,4 +131,37 @@
         });
     </script>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('formulario');
+        const inputs = document.querySelectorAll('.cop-format');
+
+        // función de formateo: toma sólo dígitos y mete puntos cada 3
+        const formatMiles = str => {
+            const digits = str.replace(/\D/g, '');
+            return digits.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        };
+
+        // 1) formatea el valor que ya vino en el input
+        inputs.forEach(input => {
+            input.value = formatMiles(input.value);
+        });
+
+        // 2) formatea mientras escribes y mantiene el cursor al final
+        inputs.forEach(input => {
+            input.addEventListener('input', () => {
+                input.value = formatMiles(input.value);
+                input.setSelectionRange(input.value.length, input.value.length);
+            });
+        });
+
+        // 3) antes de enviar, quita TODO lo que no sea dígito
+        form.addEventListener('submit', () => {
+            inputs.forEach(input => {
+                input.value = input.value.replace(/\D/g, '');
+            });
+        });
+    });
+</script>
 @endsection

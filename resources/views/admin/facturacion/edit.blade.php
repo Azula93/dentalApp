@@ -87,7 +87,7 @@
                                 placeholder="0"
                                 autocomplete="off"
                                 maxlength="11"
-                                value="{{ old('subtotal',number_format($factura->subtotal, 3)) }}"
+                                value="{{ old('subtotal', number_format($factura->subtotal ?? 0, 0, ',', '.')) }}"
                                 required>
                         </div>
                         <div class="col-md-3">
@@ -100,7 +100,7 @@
                                 placeholder="0"
                                 autocomplete="off"
                                 maxlength="11"
-                                value="{{ old('descuento',number_format($factura->descuento, 0)) }}">
+                                value="{{ old('descuento', number_format($factura->descuento?? 0, 0, ',', '.')) }}">
                         </div>
                         <div class="col-md-3">
                             <label for="impuesto">Impuesto <b>*</b></label>
@@ -134,7 +134,7 @@
                                 placeholder="0"
                                 autocomplete="off"
                                 maxlength="11"
-                                value="{{ old('monto',number_format($factura->monto, 3)) }}"
+                                value="{{ old('monto', number_format($factura->monto?? 0, 0, ',', '.')) }}"
                                 required>
                         </div>
                     </div>
@@ -258,18 +258,41 @@
     </div>
 </div>
 
-@push('scripts')
+
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll('.cop-format').forEach(input => {
+        const form = document.getElementById('formulario');
+        const inputs = document.querySelectorAll('.cop-format');
+
+        // función de formateo: toma sólo dígitos y mete puntos cada 3
+        const formatMiles = str => {
+            const digits = str.replace(/\D/g, '');
+            return digits.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        };
+
+        // 1) formatea el valor que ya vino en el input
+        inputs.forEach(input => {
+            input.value = formatMiles(input.value);
+        });
+
+        // 2) formatea mientras escribes y mantiene el cursor al final
+        inputs.forEach(input => {
             input.addEventListener('input', () => {
-                let digits = input.value.replace(/\D/g, '');
-                input.value = digits.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                input.value = formatMiles(input.value);
                 input.setSelectionRange(input.value.length, input.value.length);
+            });
+        });
+
+        // 3) antes de enviar, quita TODO lo que no sea dígito
+        form.addEventListener('submit', () => {
+            inputs.forEach(input => {
+                input.value = input.value.replace(/\D/g, '');
             });
         });
     });
 </script>
-@endpush
+
+
+
 
 @endsection

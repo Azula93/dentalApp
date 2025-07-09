@@ -93,7 +93,7 @@
                         <div class="col-md-3">
                             <label for="monto">Total a pagar</label> <b>*</b>
                             <input type="text" name="monto" id="monto" step="0.01"
-                                class="form-control cop-format" placeholder="0" autocomplete="off" maxlength="11" value="{{ old('monto') }}" required>
+                                class="form-control cop-format" placeholder="0" autocomplete="off" maxlength="11" value="{{  old('monto', intval($factura->monto ?? 0))  }}" required>
                         </div>
                     </div>
 
@@ -145,43 +145,46 @@
                             </button>
                         </div>
                     </div>
-
                 </form>
             </div>
         </div>
     </div>
 </div>
 
+
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll('.cop-format').forEach(input => {
+        const form = document.getElementById('formulario');
+        const inputs = document.querySelectorAll('.cop-format');
+
+        // función de formateo: toma sólo dígitos y mete puntos cada 3
+        const formatMiles = str => {
+            const digits = str.replace(/\D/g, '');
+            return digits.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        };
+
+        // 1) formatea el valor que ya vino en el input
+        inputs.forEach(input => {
+            input.value = formatMiles(input.value);
+        });
+
+        // 2) formatea mientras escribes y mantiene el cursor al final
+        inputs.forEach(input => {
             input.addEventListener('input', () => {
-                // Guarda la posición inicial del cursor
-                const cursorPos = input.selectionStart;
-
-                // Limpia y separa en parte entera y decimal
-                let cleaned = input.value.replace(/[^0-9,]/g, '');
-                const parts = cleaned.split(',');
-                const integerPartRaw = parts[0];
-                const decimalPartRaw = parts[1] || '';
-
-                // Formatea miles
-                const integerFormatted = integerPartRaw.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-
-                // Une con decimal si existe
-                const newValue = decimalPartRaw ?
-                    integerFormatted + ',' + decimalPartRaw :
-                    integerFormatted;
-
-                // Asigna el nuevo valor
-                input.value = newValue;
-
-                // Reposiciona el cursor al final (opcional: podrías calcular el offset real)
+                input.value = formatMiles(input.value);
                 input.setSelectionRange(input.value.length, input.value.length);
+            });
+        });
+
+        // 3) antes de enviar, quita TODO lo que no sea dígito
+        form.addEventListener('submit', () => {
+            inputs.forEach(input => {
+                input.value = input.value.replace(/\D/g, '');
             });
         });
     });
 </script>
+
 
 
 @endsection
