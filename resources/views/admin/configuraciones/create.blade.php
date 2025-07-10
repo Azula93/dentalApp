@@ -5,7 +5,7 @@
 </div>
 <hr>
 
-<div class="row">
+<div class="container-fluid">
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
@@ -104,21 +104,16 @@
                             </div>
                         </div>
                     </div>
-
             </div>
-
-            <div class="row">
-                <div class="col-md-12 m-3">
-                    <div class="form-group">
-                        <a href="{{url('admin/configs')}}" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Regresar</a>
-                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-gear"></i> Configurar</button>
-                    </div>
-                </div>
-            </div>
-            </form>
         </div>
-        <!-- /.card-body -->
+
+        <div class="d-flex justify-content-between flex-wrap gap-2">
+            <a href="{{url('admin/configs')}}" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Regresar</a>
+            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-gear"></i> Configurar</button>
+        </div>
+        </form>
     </div>
 </div>
 </div>
+
 @endsection

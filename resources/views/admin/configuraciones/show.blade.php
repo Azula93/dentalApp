@@ -46,7 +46,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="">Logo:</label>
-                            <img src="{{ url('storage/'.$configuracion->logo)}} " alt="logotipo" width="50px" height="50px">
+                            <img src="{{ url('storage/'.$configuracion->logo)}} " alt="logotipo" width="120px" height="120px">
                         </div>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
             <div class="row">
                 <div class="col-md-12 m-3">
                     <div class="form-group">
-                        <a href="{{url('admin/configs')}}" class="btn btn-secondary">Regresar</a>
+                        <a href="{{url('admin/configs')}}" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Regresar</a>
                     </div>
                 </div>
             </div>
