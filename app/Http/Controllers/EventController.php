@@ -200,8 +200,8 @@ class EventController extends Controller
         $fecha_inicio = $request->input('fecha_inicio');
         $fecha_fin = $request->input('fecha_fin');
 
-        $eventos = Event::whereBetween('start', [request('fecha_inicio'), request('fecha_fin')])
-            ->get();
+        $eventos = Event::whereBetween('start', [$fecha_inicio, $fecha_fin])->get();
+
         $configuracion = Config::latest()->first();
         $pdf = \Pdf::loadView('admin.reservas.pdf_fechas', compact('configuracion', 'eventos', 'fecha_inicio', 'fecha_fin'))
             ->setPaper('A4', 'portrait')

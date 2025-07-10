@@ -13,7 +13,7 @@
                 </h3>
             </div>
             <div class="card-body">
-                <a href="{{url('admin/reservas/pdf')}}"
+                <a href="{{url('admin/reservas/pdf')}}" target="_blank"
                     class="btn btn-success "><i class="fa-solid fa-print"></i>
                     Generar Listado Reservas
                 </a>
@@ -31,7 +31,7 @@
                 </h3>
             </div>
             <div class="card-body">
-                <form action="{{route('admin.reservas.pdf_fechas')}}" method="GET">
+                <form action="{{route('admin.reservas.pdf_fechas')}}" method="GET" target="_blank">
                     <div class="row">
                         <div class="col-md-4">
                             <label for="">Fecha incio</label>
@@ -60,7 +60,7 @@
     <div class="col-md-12 mt-4">
         <div class="form-group ">
             <a href="{{url('admin/doctores')}}"
-                class="btn btn-secondary ">Regresar</a>
+                class="btn btn-secondary "><i class="fa-solid fa-arrow-left"></i> Regresar</a>
         </div>
     </div>
 </div>

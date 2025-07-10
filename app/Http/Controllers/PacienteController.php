@@ -335,4 +335,38 @@ class PacienteController extends Controller
 
         return $pdf->stream('paciente_' . $paciente->id . '.pdf');
     }
+
+    public function buscar_paciente()
+    {
+        return view('admin.pacientes.buscar_paciente');
+    }
+
+    public function imprimir_hc($id)
+    {
+        $paciente = Paciente::findOrFail($id);
+        $paciente->load([
+            'valoracion',
+            'anamnesis',
+            'antecedentesMedicos',
+            'odontograma',
+            'diagnosticoHcs',
+            'controles.doctor',
+            'examenendodonticos',
+            'examenperiodontals',
+        ]);
+
+        $configuracion = Config::first();
+        $examen = $paciente->examenendodonticos;
+        $examenPeriodontal = $paciente->examenperiodontals;
+        // Establecer zona horaria correcta
+        date_default_timezone_set('America/Bogota');
+        $fechaHora = Carbon::now()->format('d/m/Y H:i');
+
+        // Generar PDF
+        $pdf = Pdf::loadView('admin.pacientes.pdf', compact('paciente', 'configuracion', 'examen', 'fechaHora', 'examenPeriodontal'))
+            ->setPaper('A4', 'portrait')
+            ->setOptions(['defaultFont' => 'times', 'isRemoteEnabled' => true]);
+
+        return $pdf->stream('paciente_' . $paciente->id . '.pdf');
+    }
 }

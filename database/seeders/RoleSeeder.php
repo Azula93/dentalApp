@@ -73,6 +73,8 @@ class RoleSeeder extends Seeder
         permission::create(['name' => 'admin.pacientes.diagnostico-hc.edit'])->syncRoles([$admin, $colaborador, $doctor]);
         permission::create(['name' => 'admin.pacientes.diagnostico-hc.update'])->syncRoles([$admin, $colaborador, $doctor]);
         permission::create(['name' => 'admin.pacientes.pdf'])->syncRoles([$admin, $colaborador, $doctor]);
+        permission::create(['name' => 'admin.pacientes.buscar_paciente'])->syncRoles([$admin, $colaborador, $doctor]);
+        permission::create(['name' => 'admin.pacientes.imprimir_hc'])->syncRoles([$admin, $colaborador, $doctor]);
 
         // consultorios
         permission::create(['name' => 'admin.consultorios.index'])->syncRoles([$admin, $colaborador]);

@@ -152,6 +152,12 @@ Route::delete('/admin/pacientes/{id}', [App\Http\Controllers\PacienteController:
 
 Route::get('admin/pacientes/{paciente}/pdf', [PacienteController::class, 'pdf'])
     ->name('admin.pacientes.pdf')->middleware('auth', 'can:admin.pacientes.pdf');
+
+Route::get('admin/pacientes/buscar_paciente', [PacienteController::class, 'buscar_paciente'])
+    ->name('admin.pacientes.buscar_paciente')->middleware('auth', 'can:admin.pacientes.buscar_paciente');
+
+Route::get('admin/pacientes/{id}', [PacienteController::class, 'imprimir_hc'])
+    ->name('admin.pacientes.imprimir_hc')->middleware('auth', 'can:admin.pacientes.imprimir_hc');
 // rutas anamnesis *******************
 // Route::middleware('auth')->group(function () {
 //     // Mostrar el formulario de anamnesis

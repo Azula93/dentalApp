@@ -176,6 +176,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <p>Controles</p>
                   </a>
                 </li>
+
+                <li class="nav-item">
+                  <a href="{{url('admin/pacientes/buscar_paciente')}}" class=" nav-link">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <p>Buscar Paciente</p>
+                  </a>
+                </li>
               </ul>
             </li>
             @endcan
@@ -235,12 +242,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   </a>
                 </li>
 
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                   <a href="{{url('admin/doctores/reportes')}} " class="nav-link">
                     <i class="nav-icon fas fa-solid fa-file-pdf"></i>
                     <p>Reportes</p>
                   </a>
-                </li>
+                </li> -->
               </ul>
             </li>
             @endcan
