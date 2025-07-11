@@ -57,7 +57,7 @@
             <div class="row">
                 <div class="col-md-4 mb-3"><strong>Nombre Acudiente:</strong> {{ $paciente->acudiente }}</div>
                 <div class="col-md-3"><strong>Parentesco:</strong> {{$paciente -> parentesco}}</div>
-                <div class="col-md-3"><strong>Ocupación Acudiente:</strong>{{$paciente -> ocupacion_acudiente}}></div>
+                <div class="col-md-3"><strong>Ocupación Acudiente:</strong> {{$paciente -> ocupacion_acudiente}}</div>
                 <div class="col-md-3"><strong>Correo Acudiente:</strong> {{$paciente -> correo_acudiente}}</div>
                 <div class="col-md-3"><strong>Celular Acudiente:</strong> {{$paciente -> celular_acudiente}}</div>
             </div>

@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
-<div class="row">
-    <h1 class="mt-3">Generar Reporte</h1>
+<div class="row justify-content-center mb-4 p-3">
+    <h1 class="mt-3">Generar reporte de reserva de citas</h1>
 </div>
 <hr>
 <div class="row">
@@ -9,7 +9,7 @@
         <div class="card card-outline card-info">
             <div class="card-header">
                 <h3 class="card-title">
-                    Listado de reservas
+                    <b>Listado de reservas</b>
                 </h3>
             </div>
             <div class="card-body">
@@ -20,14 +20,14 @@
             </div>
         </div>
     </div>
-</div>
 
-<div class="row">
+
+
     <div class="col-md-8 mt-4">
         <div class="card card-outline card-info">
             <div class="card-header">
                 <h3 class="card-title">
-                    Generar reporte por rango de fechas
+                    <b>Generar reporte por rango de fechas</b>
                 </h3>
             </div>
             <div class="card-body">
@@ -55,15 +55,4 @@
         </div>
     </div>
 </div>
-
-<div class="row">
-    <div class="col-md-12 mt-4">
-        <div class="form-group ">
-            <a href="{{url('admin/doctores')}}"
-                class="btn btn-secondary "><i class="fa-solid fa-arrow-left"></i> Regresar</a>
-        </div>
-    </div>
-</div>
-
-
 @endsection

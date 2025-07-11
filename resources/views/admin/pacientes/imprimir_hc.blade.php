@@ -49,7 +49,6 @@
             box-sizing: border-box;
         }
 
-
         /** Márgenes de la página **/
         @page {
             margin: 120px 50px 80px;
@@ -95,7 +94,6 @@
 </head>
 
 <body>
-
     <header>
         @if($configuracion->logo)
         <img
@@ -118,7 +116,7 @@
     </footer>
 
 
-    <h1>Historia Clínica del Paciente: <br> {{ $paciente->nombres }} {{ $paciente->apellidos }}</h1>
+    <h1>Historia Clínica del Paciente: {{ $paciente->nombres }} {{ $paciente->apellidos }}</h1>
 
     {{-- DATOS PERSONALES --}}
     <div class="section-title">Datos Personales</div>

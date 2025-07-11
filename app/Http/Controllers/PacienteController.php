@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Config;
 use App\Models\AntecedenteMedico;
 use App\Models\Control;
+use Illuminate\Support\Str;
 
 class PacienteController extends Controller
 {
@@ -336,37 +337,42 @@ class PacienteController extends Controller
         return $pdf->stream('paciente_' . $paciente->id . '.pdf');
     }
 
-    public function buscar_paciente()
+    public function buscar_paciente(Request $request)
     {
-        return view('admin.pacientes.buscar_paciente');
+        $di = $request->di;
+        $paciente = Paciente::where('di', $di)->first();
+        return view('admin.pacientes.buscar_paciente', compact('paciente'))
+            ->with('icono', 'success');
     }
 
-    public function imprimir_hc($id)
+    public function imprimir_hc(Paciente $paciente)
     {
-        $paciente = Paciente::findOrFail($id);
-        $paciente->load([
-            'valoracion',
-            'anamnesis',
-            'antecedentesMedicos',
-            'odontograma',
-            'diagnosticoHcs',
-            'controles.doctor',
-            'examenendodonticos',
-            'examenperiodontals',
-        ]);
-
-        $configuracion = Config::first();
-        $examen = $paciente->examenendodonticos;
-        $examenPeriodontal = $paciente->examenperiodontals;
+        $configuracion = Config::latest()->first();
         // Establecer zona horaria correcta
         date_default_timezone_set('America/Bogota');
         $fechaHora = Carbon::now()->format('d/m/Y H:i');
+        // Carga tu vista Blade que arma el historial clínico
+        $pdf = Pdf::loadView(
+            'admin.pacientes.imprimir_hc',
+            compact('paciente', 'configuracion', 'fechaHora')
+        );
 
-        // Generar PDF
-        $pdf = Pdf::loadView('admin.pacientes.pdf', compact('paciente', 'configuracion', 'examen', 'fechaHora', 'examenPeriodontal'))
-            ->setPaper('A4', 'portrait')
-            ->setOptions(['defaultFont' => 'times', 'isRemoteEnabled' => true]);
 
-        return $pdf->stream('paciente_' . $paciente->id . '.pdf');
+        // Puedes concatenar nombres y apellidos:
+        $nombreArchivo = 'historia_clinica_'
+            . Str::slug($paciente->di)
+            . '.pdf';
+
+        // Renderizar PDF primero para obtener el DomPDF
+        $dompdf = $pdf->getDomPDF();
+        $dompdf->render();
+
+        // Añadir pie de página en todas las páginas
+        $canvas = $dompdf->getCanvas();
+        $canvas->page_text(30, 800, "Generado por: " . Auth::user()->email, null, 9, [0, 0, 0]);
+        $canvas->page_text(250, 800, "Página {PAGE_NUM} de {PAGE_COUNT}", null, 9, [0, 0, 0]);
+        $canvas->page_text(420, 800, "Fecha: {$fechaHora}", null, 9, [0, 0, 0]);
+
+        return $pdf->stream($nombreArchivo);
     }
 }

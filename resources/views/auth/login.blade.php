@@ -110,74 +110,119 @@
             throw fetch("/cdn-cgi/zaraz/t"), e;
         };
     </script>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            min-height: 100vh;
+        }
+
+        .card-login {
+            border: none;
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+
+        .card-login .card-header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            border: none;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-login .card-body {
+            background: #fff;
+        }
+
+        .input-group-text {
+            background: transparent;
+            border: none;
+        }
+
+        .form-control {
+            border-radius: 0.5rem;
+        }
+
+        .btn-primary {
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
 
 <body class="hold-transition login-page"
-    style="background-image: url({{ asset('assets/img/hero-carousel/hero-carousel-2.jpg') }});"
-    background-size:100vw 100vh
-    background-repeat:no-repeat
-    background-attachment:fixed>
-    <div class="login-box">
-        <!-- /.login-logo -->
-        <div class="card card-outline card-primary">
-            <div class="card-header text-center">
-                <a href="index2.html" class="h1"><b>Consultorio</b> Dra. Diana Lorena</a>
+    style="background: url('{{ asset('assets/img/hero-carousel/hero-carousel-2.jpg') }}') no-repeat center center fixed; background-size: cover;">
+
+    <div class="d-flex justify-content-center align-items-center" style="height:100vh;">
+        <div class="card shadow-lg rounded-lg" style="width: 360px; background-color: rgba(255,255,255,0.85);">
+
+            <div class="card-header text-center bg-primary text-white py-4 rounded-top-lg">
+                <h2 class="mb-0"><i class="fas fa-tooth mr-2"></i><strong>Consultorio</strong> Dra. Diana Lorena</h2>
             </div>
-            <div class="card-body">
+
+            <div class="card-body p-4">
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="email" class=" col-form-label text-md-end">Correo: </label>
-                                <div class="">
-                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
-                                    @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
+                    <div class="form-group">
+                        <label for="email">Correo</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-white border-right-0">
+                                    <i class="fas fa-envelope text-muted"></i>
+                                </span>
                             </div>
+                            <input id="email"
+                                type="email"
+                                name="email"
+                                value="{{ old('email') }}"
+                                required autofocus
+                                class="form-control border-left-0 @error('email') is-invalid @enderror"
+                                placeholder="tú@ejemplo.com">
+                            @error('email')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="password" class=" col-form-label text-md-end">Contraseña: </label>
-                                <div class="">
-                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                    @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
+                    <div class="form-group">
+                        <label for="password">Contraseña</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-white border-right-0">
+                                    <i class="fas fa-lock text-muted"></i>
+                                </span>
                             </div>
+                            <input id="password"
+                                type="password"
+                                name="password"
+                                required
+                                class="form-control border-left-0 @error('password') is-invalid @enderror"
+                                placeholder="••••••••">
+                            @error('password')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
-                    <br>
-                    <div class="row ">
-                        <div class="col-md-12 ">
-                            <button type="submit" class="btn btn-primary btn-block">
-                                Inicia Sesión
-                            </button>
-                        </div>
+
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="remember" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                        <label class="form-check-label" for="remember">Recuérdame</label>
                     </div>
+
+                    <button type="submit" class="btn btn-primary btn-block py-2">
+                        <i class="fas fa-sign-in-alt mr-1"></i> Iniciar Sesión
+                    </button>
                 </form>
-                <br>
-                <p class="d-flex justify-content-center">
-                    <a href="{{ url('register') }}" class="text-center"> ¿Aún no estas registrado? </a>
-                </p>
             </div>
-            <!-- /.card-body -->
+
+            <div class="card-footer text-center bg-white rounded-bottom-lg">
+                <small>¿No tienes cuenta? <a href="{{ url('register') }}">Regístrate aquí</a></small>
+            </div>
+
         </div>
-        <!-- /.card -->
     </div>
-    <!-- /.login-box -->
+
 
     <!-- jQuery -->
     <script src="plugins/jquery/jquery.min.js"></script>

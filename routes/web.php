@@ -85,20 +85,18 @@ Route::get('/admin/secretarias/{id}/confirm-delete', [App\Http\Controllers\Secre
 
 Route::delete('/admin/secretarias/{id}', [App\Http\Controllers\SecretariaController::class, 'destroy'])->name('admin.secretarias.destroy')->middleware('auth', 'can:admin.secretarias.destroy');
 
-
-
 // RUTAS CONTROLES DE PACIENTES
 
 Route::get('/admin/pacientes/controles', [PacienteControlController::class, 'index'])
     ->name('admin.pacientes.controles.index_controles')
     ->middleware('auth');
 
-// Crear nuevo control
+
 Route::get('/admin/pacientes/controles/create', [PacienteControlController::class, 'create'])
     ->name('admin.pacientes.controles.create_controles')
     ->middleware('auth');
 
-// Guardar nuevo control
+
 Route::post('/admin/pacientes/controles/create', [PacienteControlController::class, 'store'])
     ->name('admin.pacientes.controles.create_controles')
     ->middleware('auth');
@@ -109,17 +107,17 @@ Route::get(
 )->name('admin.pacientes.controles.pdf_controles')->middleware('auth');
 
 
-// // Ver un control específico
+
 Route::get('/admin/pacientes/controles/{id}', [PacienteControlController::class, 'show'])
     ->name('admin.pacientes.controles.show_controles')
     ->middleware('auth');
 
-// // Editar un control
+
 Route::get('/admin/pacientes/controles/{control}/edit', [PacienteControlController::class, 'edit'])
     ->name('admin.pacientes.controles.edit_controles')
     ->middleware('auth');
 
-// // Actualizar un control
+
 Route::put('/admin/pacientes/controles/{control}', [PacienteControlController::class, 'update'])
     ->name('admin.pacientes.controles.update_controles')
     ->middleware('auth');
@@ -127,10 +125,17 @@ Route::put('/admin/pacientes/controles/{control}', [PacienteControlController::c
 Route::get('/admin/pacientes/controles/{id}/confirm-delete_controles', [App\Http\Controllers\PacienteControlController::class, 'confirmDelete'])->name('admin.pacientes.controles.confirm-delete_controles')
     ->middleware('auth');
 
-// // Eliminar un control
+
 Route::delete('/admin/pacientes/controles/{id}', [PacienteControlController::class, 'destroy'])
     ->name('admin.pacientes.controles.destroy_controles')
     ->middleware('auth');
+
+// RUTAS BUSCAR PACIENTES
+Route::get('/admin/pacientes/buscar_paciente', [App\Http\Controllers\PacienteController::class, 'buscar_paciente'])
+    ->name('admin.pacientes.buscar_paciente')->middleware('auth', 'can:admin.pacientes.buscar_paciente');
+
+Route::get('/admin/pacientes/paciente/{paciente}', [PacienteController::class, 'imprimir_hc'])
+    ->name('admin.pacientes.imprimir_hc')->middleware('auth', 'can:admin.pacientes.imprimir_hc');
 
 //Rutas admin-pacientes ******************
 
@@ -153,11 +158,9 @@ Route::delete('/admin/pacientes/{id}', [App\Http\Controllers\PacienteController:
 Route::get('admin/pacientes/{paciente}/pdf', [PacienteController::class, 'pdf'])
     ->name('admin.pacientes.pdf')->middleware('auth', 'can:admin.pacientes.pdf');
 
-Route::get('admin/pacientes/buscar_paciente', [PacienteController::class, 'buscar_paciente'])
-    ->name('admin.pacientes.buscar_paciente')->middleware('auth', 'can:admin.pacientes.buscar_paciente');
 
-Route::get('admin/pacientes/{id}', [PacienteController::class, 'imprimir_hc'])
-    ->name('admin.pacientes.imprimir_hc')->middleware('auth', 'can:admin.pacientes.imprimir_hc');
+
+
 // rutas anamnesis *******************
 // Route::middleware('auth')->group(function () {
 //     // Mostrar el formulario de anamnesis
@@ -310,8 +313,6 @@ Route::get('/admin/reservas/pdf', [App\Http\Controllers\EventController::class, 
 
 Route::get('/admin/reservas/pdf_fechas', [App\Http\Controllers\EventController::class, 'pdf_fechas'])->name('admin.reservas.pdf_fechas')->middleware('auth', 'can:admin.reservas.pdf_fechas');
 
-//**** Rutas CONTROLES *****
-
 // RUTAS ANAMNESIS 
 Route::get('pacientes/{id}/anamnesis', [PacienteController::class, 'editAnamnesis'])->name('admin.pacientes.anamnesis.edit')->middleware('auth', 'can:admin.pacientes.anamnesis.edit');
 Route::put('pacientes/{id}/anamnesis', [PacienteController::class, 'updateAnamnesis'])->name('admin.pacientes.anamnesis.update')->middleware('auth', 'can:admin.pacientes.anamnesis.update');
@@ -346,8 +347,6 @@ Route::get('/admin/facturacion/{id}', [FacturacionController::class, 'show'])
 Route::get('/admin/facturacion/{id}/edit', [FacturacionController::class, 'edit'])
     ->name('admin.facturacion.edit')
     ->middleware('auth', 'can:admin.facturacion.edit');
-
-
 
 Route::put('/admin/facturacion/{id}', [FacturacionController::class, 'update'])
     ->name('admin.facturacion.update')
