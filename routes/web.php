@@ -10,6 +10,7 @@ use App\Http\Controllers\FacturacionController;
 use App\Http\Controllers\ExamenendodonticoController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\PacienteControlController;
+use App\Http\Controllers\PlanTratamientoController;
 
 
 /*
@@ -136,6 +137,23 @@ Route::get('/admin/pacientes/buscar_paciente', [App\Http\Controllers\PacienteCon
 
 Route::get('/admin/pacientes/paciente/{paciente}', [PacienteController::class, 'imprimir_hc'])
     ->name('admin.pacientes.imprimir_hc')->middleware('auth', 'can:admin.pacientes.imprimir_hc');
+
+// Rutas plan de tratamiento
+
+Route::get(
+    '/admin/pacientes/{paciente}/plan-tratamiento',
+    [PlanTratamientoController::class, 'edit']
+)
+    ->middleware('auth', 'can:admin.pacientes.plan-tratamiento.edit')
+    ->name('admin.pacientes.plan-tratamiento.edit');
+
+// Guardar (update o store según exista o no)
+Route::put(
+    '/admin/pacientes/{paciente}/plan-tratamiento',
+    [PlanTratamientoController::class, 'update']
+)
+    ->middleware('auth', 'can:admin.pacientes.plan-tratamiento.update')
+    ->name('admin.pacientes.plan-tratamiento.update');
 
 //Rutas admin-pacientes ******************
 

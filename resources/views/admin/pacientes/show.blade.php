@@ -572,9 +572,7 @@
         </div>
     </div>
     @endif
-
     <!-- /ODONTOGRAMA -->
-
 
     <!-- VALORACION -->
     @php
@@ -1358,9 +1356,7 @@ $txt = fn($v) => $v ? nl2br(e($v)) : '—';
         </table>
     </div>
 </div>
-<!-- /EXAMEN PERIODONTAL -->
 <!-- /EXAMEN ENDODONTICO Y PERIODONTAL -->
-
 
 <!-- Diagnóstico  -->
 <div class="card mb-4">
@@ -1434,6 +1430,78 @@ $txt = fn($v) => $v ? nl2br(e($v)) : '—';
     @endif
 </div>
 <!-- /CONTROLES -->
+
+<!-- PLAN DE TRATAMIENTO -->
+<div class="container py-4">
+    <div class="card shadow mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center" style="background-color:rgba(77, 127, 237, 1);">
+            <h5 class="m-0 font-weight-bold">PLAN DE TRATAMIENTO</h5>
+
+        </div>
+        <div class="card-body">
+            {{-- Modalidades --}}
+
+            <div class="row mb-4">
+                @foreach([
+                'Ortodoncia Correctiva' => $plan->ortodoncia_correctiva,
+                'Compensación Ortodoncia' => $plan->compensacion_ortodoncia,
+                'Ortopedia Dentofacial' => $plan->ortopedia_dentofacial,
+                'Cirugía Ortognática' => $plan->cirugia_ortognatica,
+                ] as $label => $value)
+                <div class="col-md-3 mb-2">
+                    <span class="small font-weight-bold">{{ $label }}</span><br>
+                    @if($value)
+                    <i class="fa fa-check-circle text-success"></i>
+                    @else
+                    <i class="fa fa-times-circle text-muted"></i>
+                    @endif
+                </div>
+                @endforeach
+            </div>
+
+            {{-- Objetivos --}}
+            <div class="mb-4">
+                <label class="small font-weight-bold text-uppercase mb-2">Objetivos del Tratamiento</label>
+                <div class="border rounded p-3 bg-light" style="min-height:150px;">
+                    {!! ($plan->objetivos ?: '—') !!}
+                </div>
+            </div>
+
+            {{-- Exodoncias --}}
+            <div class="row mb-4">
+                @foreach([
+                'Exodoncias' => $plan->exodoncias,
+                'Posibles Exodoncias' => $plan->posibles_exodoncias,
+                'Sin Exodoncias' => $plan->sin_exodoncias,
+                ] as $label => $value)
+                <div class="col-md-4 mb-3">
+                    <span class="small font-weight-bold">{{ $label }}</span>
+                    <div class="border rounded px-2 py-2 bg-light">
+                        {{ $value ?: '—' }}
+                    </div>
+                </div>
+                @endforeach
+            </div>
+
+            {{-- Aparatología y Contención --}}
+            <div class="row mb-4">
+                <div class="col-md-6 mb-3">
+                    <span class="small font-weight-bold">Aparatología Complementaria</span>
+                    <div class="border rounded px-2 py-2 bg-light">
+                        {{ $plan->aparatologia_complementaria ?: '—' }}
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <span class="small font-weight-bold">Contención</span>
+                    <div class="border rounded px-2 py-2 bg-light">
+                        {{ $plan->contencion ?: '—' }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /PLAN DE TRATAMIENTO -->
 
 </div>
 

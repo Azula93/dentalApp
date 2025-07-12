@@ -519,8 +519,6 @@
         <h4>Observaciones del Odontograma</h4>
         <p>{!! nl2br(e($odontograma->observaciones_odontograma ?? '— Sin observaciones —')) !!}</p>
     </div>
-
-
     {{-- /ODONTOGRAMA --}}
 
     {{-- VALORACION --}}
@@ -861,21 +859,92 @@
         </tbody>
     </table>
     @endif
+    <!-- /DIAGNOSTICO -->
 
+    <!-- CONTROLES -->
     <h3 class="mt-4">Controles</h3>
-
-    @forelse($paciente->controles as $control)
-    <div style="margin-bottom: 1rem;">
-        <strong>Fecha consulta:</strong> {{ $control->fecha_consulta }}<br>
-        <strong>Doctor:</strong>
-        {{ $control->doctor->nombres }} {{ $control->doctor->apellidos }}<br>
-        <strong>Descripción:</strong><br>
-        {!! nl2br(strip_tags($control->detalle)) !!}
-    </div>
-    @empty
+    @if($paciente->controles->isEmpty())
     <p>Este paciente aún no tiene controles registrados.</p>
-    @endforelse
+    @else
+    <div class="table-responsive mt-3">
+        <table class="table table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <th>Fecha de Consulta</th>
+                    <th>Doctor</th>
+                    <th>Descripción</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($paciente->controles as $control)
+                <tr>
+                    <td>{{ $control->fecha_consulta }}</td>
+                    <td>{{ $control->doctor->nombres }} {{ $control->doctor->apellidos }}</td>
+                    <td style="white-space: pre-wrap;">
+                        {!! nl2br(e(strip_tags($control->detalle))) !!}
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    @endif
+    <!--    /CONTROLES -->
 
+    <!-- PLAN TRATAMIENTO -->
+    {{-- Tabla Plan de Tratamiento --}}
+    <table style="width:100%; border-collapse: collapse; margin-bottom: 15px;">
+        <thead>
+            <tr>
+                <th style="border:1px solid #999; padding:6px; text-align:left;">Tratamiento</th>
+                <th style="border:1px solid #999; padding:6px; text-align:left;">Exodoncias</th>
+                <th style="border:1px solid #999; padding:6px; text-align:left;">Posibles Exodoncias</th>
+                <th style="border:1px solid #999; padding:6px; text-align:left;">Sin Exodoncias</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border:1px solid #999; padding:6px;">
+                    @if($plan->ortodoncia_correctiva) Ortodoncia Correctiva<br>@endif
+                    @if($plan->compensacion_ortodoncia) Compensación Ortodoncia<br>@endif
+                    @if($plan->ortopedia_dentofacial) Ortopedia Dentofacial<br>@endif
+                    @if($plan->cirugia_ortognatica) Cirugía Ortognática<br>@endif
+                    @if(!($plan->ortodoncia_correctiva || $plan->compensacion_ortodoncia || $plan->ortopedia_dentofacial || $plan->cirugia_ortognatica))
+                    — Ninguna
+                    @endif
+                </td>
+                <td style="border:1px solid #999; padding:6px;">
+                    {{ $plan->exodoncias ?: '—' }}
+                </td>
+                <td style="border:1px solid #999; padding:6px;">
+                    {{ $plan->posibles_exodoncias ?: '—' }}
+                </td>
+                <td style="border:1px solid #999; padding:6px;">
+                    {{ $plan->sin_exodoncias ?: '—' }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table style="width:100%; border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th style="border:1px solid #999; padding:6px;">Aparatología Complementaria</th>
+                <th style="border:1px solid #999; padding:6px;">Contención</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border:1px solid #999; padding:6px;">
+                    {{ $plan->aparatologia_complementaria ?: '—' }}
+                </td>
+                <td style="border:1px solid #999; padding:6px;">
+                    {{ $plan->contencion ?: '—' }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- /PLAN TRATAMIENTO -->
 
     <div style="margin-top: 50px;">
         <table width="100%">

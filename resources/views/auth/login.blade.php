@@ -205,11 +205,6 @@
                         </div>
                     </div>
 
-                    <div class="form-group form-check">
-                        <input type="checkbox" class="form-check-input" id="remember" name="remember" {{ old('remember') ? 'checked' : '' }}>
-                        <label class="form-check-label" for="remember">Recuérdame</label>
-                    </div>
-
                     <button type="submit" class="btn btn-primary btn-block py-2">
                         <i class="fas fa-sign-in-alt mr-1"></i> Iniciar Sesión
                     </button>

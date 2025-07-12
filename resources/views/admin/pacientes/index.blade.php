@@ -43,46 +43,89 @@
 
                 <td class="text-center">
                     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                        <a href="{{url('admin/pacientes/'.$paciente->id)}}" type="button" class="btn btn-info btn-sm"><i class="fa-solid fa-eye"></i></a>
+                        <a href="{{url('admin/pacientes/'.$paciente->id)}}" type="button" class="btn btn-sm"
+                            data-toggle="tooltip"
+                            title="Ver datos Paciente"
+                            data-placement="top"
+                            style="background-color: #00BCD4; color: white;">
+                            <i class="fa-solid fa-eye"></i>
+                        </a>
 
                         <a href="{{ url('admin/pacientes/'.$paciente->id.'/edit') }}"
-                            type="button" class="btn btn-warning btn-sm"><i class="fa-solid fa-user-pen"></i></a>
+                            type="button" class="btn  btn-sm"
+                            data-toggle="tooltip"
+                            title="Editar Paciente"
+                            data-placement="top"
+                            style="background-color:#FFC107">
+                            <i class="fa-solid fa-user-pen"></i>
+                        </a>
 
                         <a href="{{ route('admin.pacientes.anamnesis.edit', $paciente) }}"
-                            type="button" class="btn btn-sm" style="background-color: #E86A92;"><i class="fa-solid fa-a"></i></a>
+                            type="button" class="btn btn-sm" style="background-color: #FF5722;"
+                            data-toggle="tooltip"
+                            title="Anamnesis"
+                            data-placement="top"><i class="fa-solid fa-a"></i></a>
 
                         <a
                             href="{{ route('admin.pacientes.antecedentes-medicos.edit', $paciente) }}"
-                            class="btn btn-sm" style="background-color: #0077B6;">
-                            <i class="fa-solid fa-file-waveform"></i>
+                            class="btn btn-sm" style="background-color: #3F51B5;"
+                            data-toggle="tooltip"
+                            title="Antecedentes Médicos"
+                            data-placement="top">
+                            <i class="fa-solid fa-file-medical"></i>
                         </a>
 
                         <a
                             href="{{ route('admin.pacientes.odontograma.edit', $paciente) }}"
-                            class="btn  btn-sm" style="background-color: #9489d7;">
+                            class="btn  btn-sm" style="background-color: #03A9F4;"
+                            data-toggle="tooltip"
+                            title="Odontograma"
+                            data-placement="top">
                             <i class="fa-solid fa-tooth"></i>
                         </a>
 
                         <a
                             href="{{ route('admin.pacientes.valoracion.edit', $paciente) }}"
-                            class="btn  btn-sm" style="background-color:rgb(19, 211, 188);">
-                            <i class="fa-solid fa-teeth"></i>
+                            class="btn  btn-sm" style="background-color: #4CAF50;"
+                            data-toggle="tooltip"
+                            title="Valoración"
+                            data-placement="top">
+                            <i class="fa-solid fa-clipboard-check"></i>
                         </a>
 
                         <a
                             href="{{ route('admin.pacientes.diagnostico-hc.update', $paciente) }}"
-                            class="btn  btn-sm" style="background-color:rgb(68, 218, 9);">
-                            <i class="fa-solid fa-briefcase-medical"></i>
+                            class="btn  btn-sm" style="background-color:	#E91E63;"
+                            data-toggle="tooltip"
+                            title="Diagnóstico HC"
+                            data-placement="top">
+                            <i class="fa-solid fa-stethoscope"></i>
                         </a>
 
                         <a
                             href="{{ route('admin.pacientes.examenendodontico.update', $paciente) }}"
-                            class="btn  btn-sm" style="background-color:rgb(236, 177, 13);">
-                            <i class="fa-solid fa-face-grimace"></i>
+                            class="btn  btn-sm" style="background-color:#009688;"
+                            data-toggle="tooltip"
+                            title="Examen Endodontico y Periodontal"
+                            data-placement="bottom">
+                            <i class="fa-solid fa-file-medical-alt"></i>
+                        </a>
+
+                        <a
+                            href="{{ route('admin.pacientes.plan-tratamiento.edit', $paciente) }}"
+                            class="btn  btn-sm" style="background-color:#9C27B0;"
+                            data-toggle="tooltip"
+                            title="Plan de Tratamiento"
+                            data-placement="top">
+                            <i class="fa-solid fa-file-medical"></i>
                         </a>
 
                         <a href="{{ url('admin/pacientes/'.$paciente->id.'/confirm-delete')}}"
-                            type="button" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i>
+                            type="button" class="btn btn-sm"
+                            data-toggle="tooltip"
+                            title="Eliminar Paciente"
+                            data-placement="top"
+                            style="background-color: #F44336;"><i class="fa-solid fa-trash-alt"></i>
                         </a>
                     </div>
                 </td>
@@ -147,5 +190,12 @@
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
         });
     </script>
+
+    <script>
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+
 </div>
 @endsection

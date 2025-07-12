@@ -105,4 +105,9 @@ class Paciente extends Model
     {
         return $this->hasOne(Examenperiodontal::class);
     }
+
+    public function planTratamiento()
+    {
+        return $this->hasOne(PlanTratamiento::class);
+    }
 }

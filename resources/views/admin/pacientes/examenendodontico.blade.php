@@ -152,7 +152,7 @@ $inf = [
 
     <div class="container-fluid">
         <h1 class="p-3 text-center">
-            Examen periodontal <br> {{ $paciente->nombres }} {{ $paciente->apellidos }}
+            Examen periodontal
         </h1>
 
         <form method="POST" action="{{ route('admin.pacientes.examenperiodontal.update', $paciente) }}">

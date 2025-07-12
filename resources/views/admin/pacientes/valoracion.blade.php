@@ -1005,7 +1005,7 @@ $v = $modelo; // ← alias breve para todo el formulario
                 {{-- Observaciones --}}
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label for="editor_obsRadio" class="form-label">Observaciones: <b>*</b></label>
+                        <label for="editor_obsRadio" class="form-label">Observaciones:</label>
 
                         <textarea name="observ_radiografico"
                             id="editor_obsRadio"
@@ -1019,7 +1019,7 @@ $v = $modelo; // ← alias breve para todo el formulario
             </div>
 
             <div class="d-flex justify-content-between flex-wrap gap-2">
-                <a href="{{ route('admin.pacientes.index', $paciente) }}" class="btn btn-secondary m-2"><i class="fa-solid fa-arrow-left"></i> Regresar</a>
+                <a href="{{ route('admin.pacientes.show', $paciente) }}" class="btn btn-secondary m-2"><i class="fa-solid fa-arrow-left"></i> Regresar</a>
                 <button type="submit" class="btn btn-success  m-2"><i class="fa-solid fa-cloud"></i> Guardar Valoración</button>
             </div>
         </div>

@@ -127,12 +127,15 @@ class PacienteController extends Controller
             'examenendodonticos',
             'examenperiodontals',
             'odontograma',
+            'planTratamiento',
 
         ])->findOrFail($id);
 
         // trae todos los controles de ese paciente con su doctor
         $controles = $paciente->controles()->with('doctor')->get();
         $paciente->load('examenendodonticos');
+
+        $plan = $paciente->planTratamiento;
 
         $odontograma = $paciente->odontograma;
         $inicial = $odontograma->initial  ?? [];
@@ -151,7 +154,7 @@ class PacienteController extends Controller
             'no_erupcionado'       => '➖',
         ];
 
-        return view('admin.pacientes.show', compact('paciente', 'controles', 'inicial', 'final', 'observaciones', 'iconMap'))
+        return view('admin.pacientes.show', compact('paciente', 'controles', 'inicial', 'final', 'observaciones', 'iconMap', 'plan'))
             ->with('icono', 'success');
     }
 
@@ -310,9 +313,11 @@ class PacienteController extends Controller
             'controles.doctor',
             'examenendodonticos',
             'examenperiodontals',
+            'planTratamiento',
         ]);
 
         $configuracion = Config::first();
+        $plan = $paciente->planTratamiento;
         $examen = $paciente->examenendodonticos;
         $examenPeriodontal = $paciente->examenperiodontals;
         // Establecer zona horaria correcta
@@ -320,7 +325,7 @@ class PacienteController extends Controller
         $fechaHora = Carbon::now()->format('d/m/Y H:i');
 
         // Generar PDF
-        $pdf = Pdf::loadView('admin.pacientes.pdf', compact('paciente', 'configuracion', 'examen', 'fechaHora', 'examenPeriodontal'))
+        $pdf = Pdf::loadView('admin.pacientes.pdf', compact('paciente', 'configuracion', 'examen', 'fechaHora', 'examenPeriodontal', 'plan'))
             ->setPaper('A4', 'portrait')
             ->setOptions(['defaultFont' => 'times', 'isRemoteEnabled' => true]);
 
@@ -347,6 +352,7 @@ class PacienteController extends Controller
 
     public function imprimir_hc(Paciente $paciente)
     {
+        $plan = $paciente->planTratamiento;
         $configuracion = Config::latest()->first();
         // Establecer zona horaria correcta
         date_default_timezone_set('America/Bogota');
@@ -354,7 +360,7 @@ class PacienteController extends Controller
         // Carga tu vista Blade que arma el historial clínico
         $pdf = Pdf::loadView(
             'admin.pacientes.imprimir_hc',
-            compact('paciente', 'configuracion', 'fechaHora')
+            compact('paciente', 'configuracion', 'fechaHora', 'plan')
         );
 
 
